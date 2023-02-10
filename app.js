@@ -1,22 +1,20 @@
 const express = require("express");
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser"); //using cookie-parser library.
 const app = express();
 
-app.use(cookieParser());
+app.use(cookieParser()); //cookie parser middleware
 
-app.get("/set-cookie", (req, res) => {
+app.get("/set", (req, res) => {
   let expire = new Date();
   expire.setMinutes(expire.getMinutes() + 20); // 만료 시간을 20분으로 설정합니다.
 
-  res.cookie("name", "sparta", {
-    expire,
-  });
+  res.cookie("name", "nodejs", { expire }); // cookie 할당.
   return res.status(200).end();
 });
 
-app.get("/get-cookie", (req, res) => {
+app.get("/get", (req, res) => {
   //const cookie = req.headers.cookie;
-  const cookies = req.cookies; //cookie parser middleware 을 적용했다.
+  const cookies = req.cookies; //So cookie parser middleware, request can get cookie.
   console.log(cookies); // name=sparta
   return res.status(200).json({ cookies });
 });
@@ -39,6 +37,6 @@ app.get("/get-session", (req, res) => {
   res.status(200).json({ sessionItem });
 });
 
-app.listen(5002, () => {
-  console.log(5002, "server listening on");
+app.listen(5001, () => {
+  console.log(5001, "server listening on");
 });
